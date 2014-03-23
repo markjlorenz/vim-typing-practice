@@ -3,6 +3,7 @@
 A little VIM script to help programmers practice typing.
 
 ## TL;DR
+![https://github.com/dapplebeforedawn/vim-typing-practice/raw/master/demo.gif](https://github.com/dapplebeforedawn/vim-typing-practice/raw/master/demo.gif)
 
 ## Usage
 ```vim
