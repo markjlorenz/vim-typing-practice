@@ -55,13 +55,16 @@ function! s:DisplayStats()
   endif
 
   let duration = s:ComputeDuration()
+  let text_length = line2byte(line('$'))
   exec bufwinnr(t:typing_buf) 'wincmd w'
   put =''
   execute 'normal! '.winwidth(0).'i-'
   put ='STATS:'
   put ='Time To Complete: '.duration.'(s)'
-  put ='Chars per min:    '.(line2byte(line('$')) / duration * 60)
+  put ='Chars per min:    '.(text_length / duration * 60)
   put ='Wasted chars:     '.t:wasted_chars
+  put ='Text chars:       '.text_length
+  put ='Error rate:       '.printf('%01.2f', 100.0 * t:wasted_chars / text_length / 2).'%'
   execute 'stopinsert'
 endfunction
 
