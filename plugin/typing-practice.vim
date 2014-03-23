@@ -15,8 +15,8 @@ function! s:TypingPractice()
   let typing_win = bufwinnr(t:typing_buf)
   set scrollbind
 
-  imap <cr> <c-o>:call CheckBuffer()<cr>
-  imap <bs> <bs><c-o>:call CharWasted()<cr>
+  imap <buffer> <cr> <c-o>:call CheckBuffer()<cr>
+  imap <buffer> <bs> <bs><c-o>:call CharWasted()<cr>
 endfunction
 
 function! CharWasted()
