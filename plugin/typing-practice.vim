@@ -1,4 +1,6 @@
 function! s:TypingPractice()
+  exec '1'
+
   let t:start_time = localtime()
   let t:wasted_chars = 0
   let t:source_buf = bufnr('%')
@@ -17,6 +19,8 @@ function! s:TypingPractice()
 
   imap <buffer> <cr> <c-o>:call CheckBuffer()<cr>
   imap <buffer> <bs> <bs><c-o>:call CharWasted()<cr>
+
+  exec 'startinsert'
 endfunction
 
 function! CharWasted()
