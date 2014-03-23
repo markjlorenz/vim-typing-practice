@@ -16,6 +16,3 @@ block = ->(*args) { puts hash[:one] }
 array.map(&block)
 array.map(&block)
 array.map(&block)
-
-# on <cr>, diff the typed buffer with the control buffer
-# if they are not == pulse red background and delete the last last of the type buffer
