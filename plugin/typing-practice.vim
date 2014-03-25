@@ -39,6 +39,7 @@ function! CheckBuffer()
   let status = system('diff - '.temp_typing_file, relevent_lines)
   if v:shell_error "the diff was not empty, no <cr> for you!
     echo status
+    exec 'norm 0D'
   else
     put ='' " do the <cr> we were trying to do
   endif
@@ -65,7 +66,7 @@ function! s:DisplayStats()
   execute 'normal! '.winwidth(0).'i-'
   put ='STATS:'
   put ='Time To Complete: '.duration.'(s)'
-  put ='Chars per min:    '.(text_length / duration * 60)
+  put ='Chars per min:    '.printf('%01.2f', 1.0 * text_length / duration * 60)
   put ='Wasted chars:     '.t:wasted_chars
   put ='Text chars:       '.text_length
   put ='Error rate:       '.printf('%01.2f', 100.0 * t:wasted_chars / text_length / 2).'%'
