@@ -4,7 +4,7 @@
 "
 " if g:typing_practice_stats_file is defined, everytime you run this plugin
 " your stats will be appended in a space delimited format:
-"     date text_length duration chars_per_min wasted_chars error_rate
+"     filename date text_length duration chars_per_min wasted_chars error_rate
 function! s:TypingPractice()
   exec '1'
 
@@ -54,8 +54,8 @@ function! CheckBuffer()
   endif
 
   if line('.') == t:source_lines
-    let _ = s:DisplayStats()
     let _ = s:RecordStats()
+    let _ = s:DisplayStats()
   end
 endfunction
 
@@ -67,12 +67,14 @@ function! s:GetReleventLines()
 endfunction
 
 function! s:RecordStats()
+  exec bufwinnr(t:source_buf) 'wincmd w'
   if !exists('g:typing_practice_stats_file')
     return
   endif
-  let date = system('date -u +"%Y-%m-%dT%H:%M:%SZ" | tr -d "\n" ') " e.g.2014-03-28T16:00:44Z
-  let line = date.' '.s:Duration().' '.s:CharPerMin().' '.t:wasted_chars.' '.s:TextLength().' '.s:ErrorRate()."\n"
-  let    _ = system('cat - >> '.g:typing_practice_stats_file, line)
+  let date     = system('date -u +"%Y-%m-%dT%H:%M:%SZ" | tr -d "\n" ') " e.g.2014-03-28T16:00:44Z
+  let filepath = expand('%:p')
+  let line     = filepath.' '.date.' '.s:Duration().' '.s:CharPerMin().' '.t:wasted_chars.' '.s:TextLength().' '.s:ErrorRate()."\n"
+  let    _     = system('cat - >> '.g:typing_practice_stats_file, line)
 endfunction
 
 function! s:DisplayStats()

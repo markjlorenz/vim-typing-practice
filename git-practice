@@ -1,0 +1,32 @@
+git push origin master
+git push origin master
+git push origin master
+git push origin master
+git push origin master
+git push origin master
+
+git pull
+git pull
+git pull
+git pull
+
+git add --all
+git add --all
+git add --all
+git add --all
+git add --all
+git add --all
+
+git commit
+git commit
+git commit
+git commit
+git commit
+git commit
+
+git diff --color
+git diff --color
+git diff --color
+git diff --color
+git diff --color
+git diff --color
