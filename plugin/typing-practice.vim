@@ -1,3 +1,10 @@
+" Maintainer:  Mark J. Lorenz <markjlorenz@gmail.com>
+" URL:         https://github.com/dapplebeforedawn/vim-typing-practice
+" License:     MIT
+"
+" if g:typing_practice_stats_file is defined, everytime you run this plugin
+" your stats will be appended in a space delimited format:
+"     date text_length duration chars_per_min wasted_chars error_rate
 function! s:TypingPractice()
   exec '1'
 
@@ -44,7 +51,10 @@ function! CheckBuffer()
     put ='' " do the <cr> we were trying to do
   endif
 
-  let _ = s:DisplayStats()
+  if line('.') == t:source_lines
+    let _ = s:DisplayStats()
+    let _ = s:RecordStats()
+  end
 endfunction
 
 function! s:GetReleventLines()
@@ -54,26 +64,41 @@ function! s:GetReleventLines()
   return join(lines, "\n")."\n"
 endfunction
 
-function! s:DisplayStats()
-  if line('.') != t:source_lines
+function! s:RecordStats()
+  if !exists('g:typing_practice_stats_file')
     return
   endif
+  let date = system('date -u +"%Y-%m-%dT%H:%M:%SZ" | tr -d "\n" ') " e.g.2014-03-28T16:00:44Z
+  let line = date.' '.s:Duration().' '.s:CharPerMin().' '.t:wasted_chars.' '.s:TextLength().' '.s:ErrorRate()."\n"
+  let    _ = system('cat - >> '.g:typing_practice_stats_file, line)
+endfunction
 
-  let duration = s:ComputeDuration()
-  let text_length = line2byte(line('$'))
+function! s:DisplayStats()
   exec bufwinnr(t:typing_buf) 'wincmd w'
   put =''
   execute 'normal! '.winwidth(0).'i-'
   put ='STATS:'
-  put ='Time To Complete: '.duration.'(s)'
-  put ='Chars per min:    '.printf('%01.2f', 1.0 * text_length / duration * 60)
+  put ='Text chars:       '.s:TextLength()
+  put ='Time To Complete: '.s:Duration().'(s)'
+  put ='Chars per min:    '.s:CharPerMin()
   put ='Wasted chars:     '.t:wasted_chars
-  put ='Text chars:       '.text_length
-  put ='Error rate:       '.printf('%01.2f', 100.0 * t:wasted_chars / text_length / 2).'%'
+  put ='Error rate:       '.s:ErrorRate().'%'
   execute 'stopinsert'
 endfunction
 
-function! s:ComputeDuration()
+function! s:CharPerMin()
+  return printf('%01.2f', 1.0 * s:TextLength() / s:Duration() * 60)
+endfunction
+
+function! s:ErrorRate()
+  return printf('%01.2f', 100.0 * t:wasted_chars / s:TextLength() / 2)
+endfunction
+
+function! s:TextLength()
+  return line2byte(line('$'))
+endfunction
+
+function! s:Duration()
   let end_time = localtime()
   return end_time - t:start_time
 endfunction
