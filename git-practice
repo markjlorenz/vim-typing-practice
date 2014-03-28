@@ -17,12 +17,12 @@ git add --all
 git add --all
 git add --all
 
-git commit
-git commit
-git commit
-git commit
-git commit
-git commit
+git commit --amend
+git commit --amend
+git commit --amend
+git commit --amend
+git commit --amend
+git commit --amend
 
 git diff --color
 git diff --color
