@@ -45,6 +45,8 @@ function! CheckBuffer()
 
   let status = system('diff - '.temp_typing_file, relevent_lines)
   if v:shell_error "the diff was not empty, no <cr> for you!
+     "play the bell
+    normal \<Esc>
     echo status
     exec 'norm 0D'
   else
