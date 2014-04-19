@@ -35,15 +35,15 @@ function! CharWasted()
 endfunction
 
 function! CheckBuffer()
-  let temp_source_file = tempname()
   let temp_typing_file = tempname()
 
   let relevent_lines = s:GetReleventLines()
 
   exec bufwinnr(t:typing_buf) 'wincmd w'
-  exe 'w '.temp_typing_file
+  silent exec 'w '.temp_typing_file
 
-  let status = system('diff - '.temp_typing_file, relevent_lines)
+  let diff_cmd = 'git diff --exit-code --minimal --word-diff '.temp_typing_file.' - | tail -n 1; test ${PIPESTATUS[0]} -eq 0'
+  let status = system(diff_cmd, relevent_lines)
   if v:shell_error "the diff was not empty, no <cr> for you!
      "play the bell
     normal \<Esc>
