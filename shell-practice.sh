@@ -14,15 +14,19 @@ sort file.dat | uniq -c | gnuplot -e "set term png; plot '/dev/stdin'" > chart.p
 sort file.dat | uniq -c | gnuplot -e "set term png; plot '/dev/stdin'" > chart.png
 
 # mkfifo a_pipe
-while true; do cat a_pipe; bundle exec cucumber; done
-while true; do cat a_pipe; bundle exec cucumber; done
-while true; do cat a_pipe; bundle exec cucumber; done
-while true; do cat a_pipe; bundle exec cucumber; done
+# mkfifo a_pipe
+# mkfifo a_pipe
+# mkfifo a_pipe
 
-echo "run the specs" > a_pipe
-echo "run the specs" > a_pipe
-echo "run the specs" > a_pipe
-echo "run the specs" > a_pipe
+while true; do cmd=`cat a_pipe`; clear; echo "$cmd"; sh -c "$cmd"; done
+while true; do cmd=`cat a_pipe`; clear; echo "$cmd"; sh -c "$cmd"; done
+while true; do cmd=`cat a_pipe`; clear; echo "$cmd"; sh -c "$cmd"; done
+while true; do cmd=`cat a_pipe`; clear; echo "$cmd"; sh -c "$cmd"; done
+
+echo "bundle exec rspec" > a_pipe
+echo "bundle exec rspec" > a_pipe
+echo "bundle exec rspec" > a_pipe
+echo "bundle exec rspec" > a_pipe
 
 for i in `seq 10`; do echo $i; done
 for i in `seq 10`; do echo $i; done
