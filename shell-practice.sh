@@ -3,10 +3,10 @@ mv afile.{jpg,png}
 mv afile.{jpg,png}
 mv afile.{jpg,png}
 
-hackpipe -a=remote | awk '{ $2 " " $1 }' | xargs -L1
-hackpipe -a=remote | awk '{ $2 " " $1 }' | xargs -L1
-hackpipe -a=remote | awk '{ $2 " " $1 }' | xargs -L1
-hackpipe -a=remote | awk '{ $2 " " $1 }' | xargs -L1
+hackpipe -a=remote | awk '{ $2, $1 }' | xargs -L1
+hackpipe -a=remote | awk '{ $2, $1 }' | xargs -L1
+hackpipe -a=remote | awk '{ $2, $1 }' | xargs -L1
+hackpipe -a=remote | awk '{ $2, $1 }' | xargs -L1
 
 sort file.dat | uniq -c | gnuplot -e "set term png; plot '/dev/stdin'" > chart.png
 sort file.dat | uniq -c | gnuplot -e "set term png; plot '/dev/stdin'" > chart.png
